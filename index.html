@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <title>PELIVE XSRF Proof of Concept</title>
   </head>
   <body>
     <p>Hi <span id="user"></span></p>
@@ -34,6 +35,9 @@
       like the user is visiting a legitimate website, but the website will be stealing your data in the background
     
     <p>Example, <a href="iframe">view this article on Financial Times</a>. </p>
+    
+    <h2>How to fix</h2>
+    <p>Change APIs such that CORS uses a whitelist of *.gic.com.sg instead of a wildcard *. We can also add an exception for localhost</p>
     
     <script>
       var body = {
