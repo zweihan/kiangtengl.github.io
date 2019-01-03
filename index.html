@@ -2,21 +2,39 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>title</title>
   </head>
   <body>
     <p>Hi <span id="user"></span></p>
-    <p><b>What is this?</b></p>
+    <h2>What is this?</h2>
     <p>
       This is a demo of how a website, hosted outside GIC, can steal data from PELive APIs.
       All that is needed is for a user that has access to PELive to visit this website (maybe via link)
       
-      On doing so, the website will be able to get information from PELive. 
+      On doing so, the website will be able to get information from PELive.
+      
+      For example, by visiting this website, I am able to retrieve this from the cube. I can then send this
+      information to any server that I control, without you noticing.
     </p>
     <p id="result">Loading</p>
-    <p>The following deal information has also been stolen</p>
+    <p>I am also able to retrieve the following information from the Pipeline API</p>
     <p id="deal">Loading...</p>
 
+    <h2>How this works:</h2>
+    
+    <ol>
+      <li>User visits malicious website</li>
+      <li>Website executes javascript</li>
+      <li>Javascript makes a request to https://pelive.gic.com.sg, using the user's windows credentials</li>
+      <li>Because PELive receives the user's credentials, it sends the information readily (even though the website isn't PELive</li>
+    </ol>
+    
+    <h2>How this can be exploited</h2>
+    
+    <p>User can be sent a link to a website that hosts another website in an iframe, i.e. Financial Times. It will look
+      like the user is visiting a legitimate website, but the website will be stealing your data in the background
+    
+    <p>Example, <a href="iframe.html">view this article on Financial Times</a>. </p>
+    
     <script>
       var body = {
         Name: "Aggregated",
